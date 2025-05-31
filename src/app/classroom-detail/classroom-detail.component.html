@@ -1,0 +1,221 @@
+<!-- Enhanced Announcements Component Template -->
+<div class="container mt-5 mb-5 p-5">
+
+  <!-- Add Homework Button (left-aligned, matching width) -->
+  <!-- Add Homework & View Homeworks Buttons (left-aligned, matching width) -->
+  <div class="row justify-content-center mb-5">
+    <div class="col-12 col-lg-8 d-flex justify-content-start">
+      <!-- Only owners see “Add Homework” -->
+      <button
+        *ngIf="isOwner()"
+        class="btn btn-outline-secondary btn-hover-primary px-4 py-2 rounded-pill d-flex align-items-center me-3"
+        (click)="onShowHomeworkDialog()"
+      >
+        <i class="bi bi-journal-plus me-2"></i>
+        Add assignment
+      </button>
+
+      <button
+        class="btn btn-outline-secondary btn-hover-primary px-4 py-2 rounded-pill d-flex align-items-center me-3"
+        [routerLink]="['/classrooms', classroomId, 'homework']"
+      >
+        <i class="bi bi-journal-text me-2"></i>
+        View assignments
+      </button>
+
+      <button
+        *ngIf="isOwner()"
+        class="btn btn-outline-danger px-4 py-2 rounded-pill d-flex align-items-center me-3"
+        (click)="onDeleteClassroom()"
+      >
+        <i class="bi bi-trash me-2"></i>
+        Delete classroom
+      </button>
+    </div>
+  </div>
+
+
+  <!-- Class Details Header (matching width) -->
+  <div class="row justify-content-center mb-5">
+    <div class="col-12 col-lg-8">
+      <div class="card class-header shadow-lg border-0 rounded-lg text-white">
+        <div class="row g-0 align-items-center">
+          <div class="col-auto ps-4">
+            <i class="bi bi-book-half fs-1"></i>
+          </div>
+          <div class="col ps-3">
+            <h2 class="mb-1">{{ classroom.name }}</h2>
+            <p class="mb-1"><strong>Subject:</strong> {{ classroom.subject }}</p>
+            <p class="mb-0">
+              <span class="code-badge" *ngIf="isOwner()">{{ classroom.code }}</span>
+              <button class="btn btn-outline-light btn-sm ms-2" title="Copy class code" (click)="copyCode()" *ngIf="isOwner()">
+                <i class="bi bi-clipboard-fill"></i>
+              </button>
+            </p>
+          </div>
+          <div class="col-auto pe-4 text-end">
+            <small class="d-block">Teacher</small>
+            <h5 class="mb-0">{{ classroom.owner.firstname }} {{ classroom.owner.lastname }}</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- New Announcement Form (matching width) -->
+  <div class="row justify-content-center mb-5">
+    <div class="col-12 col-lg-8">
+      <div class="card new-announcement-card mb-5 p-4 shadow-sm border-0 rounded-lg">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h4 class="card-title text-primary m-0">Create Announcement</h4>
+        </div>
+        <div class="d-flex flex-column">
+          <div class="input-group align-items-start">
+            <div class="input-group-prepend">
+              <span class="input-group-text bg-transparent border-0 p-0 me-3">
+                <i class="bi bi-person-circle fs-2 text-secondary"></i>
+              </span>
+            </div>
+            <textarea
+              class="form-control flex-grow-1 border-2 rounded-lg"
+              placeholder="Write your announcement..."
+              rows="3"
+              [(ngModel)]="newAnnouncement"
+            ></textarea>
+          </div>
+          <button
+            class="btn btn-primary mt-3 align-self-end px-4 py-2 rounded-pill d-flex align-items-center"
+            (click)="addAnnouncement()"
+          >
+            <i class="bi bi-send-fill me-2"></i>
+            Post
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Announcements List (matching width) -->
+  <div class="row justify-content-center gy-4">
+    <div class="col-12 col-lg-8" *ngFor="let ann of announcements">
+      <a
+        class="text-decoration-none d-block"
+        [routerLink]="['/classrooms', classroomId, 'announcement', ann.id]"
+      >
+        <div class="card announcement-card shadow-sm mb-2 border-0 rounded-lg hover-shadow">
+          <div class="card-body">
+            <div class="d-flex align-items-center mb-3">
+              <div class="avatar" [ngClass]="'avatar-' + (ann.createdBy.length % 5)">
+                {{ ann.createdBy.charAt(0) }}
+              </div>
+              <div>
+                <h5 class="mb-1 text-primary">{{ ann.createdBy }}</h5>
+                <small class="text-muted">
+                  {{ ann.timestamp | date: 'dd.MM.yyyy HH:mm' }}
+                </small>
+              </div>
+            </div>
+            <p class="card-text ps-5 mb-4">{{ ann.message }}</p>
+
+            <div class="comments ps-5">
+              <div *ngFor="let c of ann.comments" class="d-flex mb-2 align-items-start">
+                <i class="bi bi-chat-left-text fs-5 text-secondary me-2"></i>
+                <div class="bg-light p-3 rounded-lg w-100">
+                  <strong class="d-block">{{ c.author }}</strong>
+                  <small class="text-muted">{{ c.timestamp | date:'dd.MM.yyyy HH:mm' }}</small>
+                  <p class="mb-0 mt-1">{{ c.text }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+      <div class="d-flex flex-row align-items-center mt-2 w-100 gap-2 mb-5">
+        <input
+          type="text"
+          class="form-control rounded-pill border-2 flex-grow-1"
+          placeholder="Write a comment..."
+          [(ngModel)]="newComment[ann.id]"
+        />
+        <button
+          class="btn btn-primary px-4 rounded-pill d-flex align-items-center"
+          (click)="submitComment(ann.id)"
+        >
+          <i class="bi bi-chat-right-text-fill me-2"></i>
+          Comment
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-homework-dialog #homeworkDialog></app-homework-dialog>
+<app-delete-classroom-dialog #deleteClassroomDialog></app-delete-classroom-dialog>
+
+<!-- Component SCSS -->
+<style lang="scss">
+  /* Class Header Styling */
+  .class-header {
+    background-color: var(--bs-primary) !important;
+    padding: 1.5rem 1rem;
+    border-radius: 1rem;
+    .bi-book-half {
+      color: rgba(255,255,255,0.85);
+    }
+    h2 {
+      font-size: 2rem;
+      font-weight: 700;
+    }
+    .code-badge {
+      background: rgba(255,255,255,0.2);
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.5rem;
+      font-family: monospace;
+    }
+  }
+
+  .card:not(.new-announcement-card) {
+    border-radius: 1rem !important;
+    border-left: 6px solid var(--bs-primary) !important;
+  }
+
+  /* Container for the form stays bright white */
+  .new-announcement-card {
+    background: #ffffff;
+  }
+
+  /* Base announcement cards */
+  .announcement-card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.07);
+    transition:
+      transform 0.2s ease-in-out,
+      box-shadow 0.2s ease-in-out;
+  }
+
+  /* Hover state — lift and deepen shadow */
+  .announcement-card:hover,
+  .hover-shadow:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  /* Shared rounding and border-width utilities */
+  .rounded-lg {
+    border-radius: 1rem !important;
+  }
+  .border-2 {
+    border-width: 2px !important;
+  }
+
+  /* Keep comments section full-width */
+  .comments {
+    max-width: 100%;
+  }
+
+  .btn-hover-primary:hover {
+    background-color: var(--bs-primary) !important;
+    border-color: var(--bs-primary) !important;
+    color: #fff !important;
+  }
+
+</style>

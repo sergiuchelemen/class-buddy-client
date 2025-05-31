@@ -1,0 +1,100 @@
+/* Full-screen backdrop */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Centered dialog card */
+.dialog {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  width: 320px;
+  max-width: 90%;
+  padding: 24px;
+}
+
+/* Dialog title */
+.dialog-title {
+  margin: 0 0 16px;
+  font-size: 1.25rem;
+  color: #333333;
+  text-align: center;
+}
+
+/* Form group spacing */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+  color: #444444;
+}
+
+.grade-input {
+  padding: 8px 10px;
+  font-size: 1rem;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+}
+
+/* Validation message styling */
+.error {
+  margin-top: 4px;
+  color: #e53935;
+  font-size: 0.85rem;
+}
+
+/* Action buttons container */
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* Base button styling */
+.btn {
+  padding: 8px 14px;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+/* Cancel button (grey) */
+.cancel-btn {
+  background-color: #b0b0b0;
+  color: white;
+}
+
+.cancel-btn:hover {
+  background-color: #8d8d8d;
+}
+
+/* Save button (green) */
+.save-btn {
+  background-color: #388e3c;
+  color: white;
+}
+
+.save-btn:hover {
+  background-color: #2e7030;
+}
+
+.save-btn:disabled {
+  background-color: #a5d6a7;
+  cursor: not-allowed;
+}

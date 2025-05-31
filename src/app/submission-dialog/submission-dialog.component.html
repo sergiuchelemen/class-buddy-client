@@ -1,0 +1,67 @@
+<!-- Only render the overlay if `visible` is true -->
+<div class="overlay" *ngIf="visible">
+  <div class="dialog">
+    <div class="row">
+      <!-- Left column: an icon or illustration for “Submission” -->
+      <div class="col image-col d-flex justify-content-center align-items-center">
+        <!-- Using Bootstrap Icons “cloud-upload” as an example -->
+        <i class="bi bi-cloud-upload icon"></i>
+      </div>
+
+      <!-- Right column: file input + action buttons -->
+      <div class="col form-col">
+        <h2>Submit Your Files</h2>
+        <p>Select one or more files to upload as your submission</p>
+
+        <!-- File‐upload input (multiple files allowed) -->
+        <div class="form-group file-upload mb-4">
+          <label for="fileInput" class="file-label btn btn-outline-secondary">
+            <i class="bi bi-paperclip me-1"></i>
+            Choose Files
+          </label>
+          <input
+            id="fileInput"
+            type="file"
+            multiple
+            (change)="onFileSelected($event)"
+            style="display: none;"
+          />
+
+          <!-- List of currently‐selected files -->
+          <ul class="file-list list-unstyled mt-3">
+            <li
+              class="file-item bg-light p-2 rounded d-flex align-items-center mb-2"
+              *ngFor="let file of files"
+            >
+              <div class="file-preview me-2">
+                <i class="bi bi-file-earmark-fill"></i>
+              </div>
+              <span class="file-name flex-grow-1 text-truncate">{{ file.name }}</span>
+              <button
+                type="button"
+                class="btn-close ms-2"
+                aria-label="Remove"
+                (click)="removeFile(file)"
+              ></button>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Action buttons -->
+        <div class="actions d-flex justify-content-end">
+          <button type="button" class="btn btn-outline-secondary me-2" (click)="cancel()">
+            Cancel
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            [disabled]="files.length === 0"
+            (click)="submit()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<div class="overlay" *ngIf="visible">
+  <div class="dialog">
+    <div class="row">
+      <div class="col image-col">
+        <i class="bi bi-people-fill icon"></i>
+      </div>
+      <div class="col form-col">
+        <h2>Create Classroom</h2>
+        <p>Fill in the details to set up your new classroom:</p>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <input formControlName="name" placeholder="Classroom Name" />
+            <div class="error" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+              Name is required.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <input formControlName="subject" placeholder="Subject" />
+            <div class="error" *ngIf="form.get('subject')?.touched && form.get('subject')?.invalid">
+              Subject is required.
+            </div>
+          </div>
+
+          <div class="actions">
+            <button type="button" class="btn cancel" (click)="cancel()">Cancel</button>
+            <button type="submit" class="btn create" [disabled]="form.invalid">Create</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

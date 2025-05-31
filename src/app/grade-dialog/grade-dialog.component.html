@@ -1,0 +1,47 @@
+<!-- Only render this entire block if visible === true -->
+<div class="overlay" *ngIf="visible">
+  <div class="dialog">
+    <h2 class="dialog-title">Assign Grade</h2>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <!-- Numeric input for grade (0–100) -->
+      <div class="form-group">
+        <label for="grade-input">Grade (0 – 100):</label>
+        <input
+          id="grade-input"
+          type="number"
+          formControlName="grade"
+          min="0"
+          max="100"
+          class="grade-input"
+        />
+        <!-- Validation messages -->
+        <div class="error" *ngIf="form.controls['grade'] && form.controls['grade'].errors">
+          <small *ngIf="form.controls['grade'].hasError('required')">
+            Grade is required.
+          </small>
+          <small *ngIf="form.controls['grade'].hasError('min')">
+            Minimum is 0.
+          </small>
+          <small *ngIf="form.controls['grade'].hasError('max')">
+            Maximum is 100.
+          </small>
+        </div>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="dialog-actions">
+        <button type="button" class="btn cancel-btn" (click)="cancel()">
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="btn save-btn"
+          [disabled]="form.invalid"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

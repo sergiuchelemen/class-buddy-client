@@ -1,0 +1,122 @@
+/* Container: grid of cards */
+.submission-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  background-color: #f0f2f5;
+}
+
+/* Each card */
+.submission-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover effect on card */
+.submission-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Header inside each card */
+.card-header {
+  background-color: #fafafa;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 16px;
+}
+
+.student-name {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #333;
+}
+
+.submission-date {
+  margin: 6px 0 0 0;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+/* Body inside each card */
+.card-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* File + Download Button section */
+.file-download {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.file-name {
+  font-size: 1rem;
+  color: #444;
+  word-break: break-all;
+}
+
+/* Grade section */
+.grade-assignment {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.grade-assignment label {
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.grade-input {
+  width: 60px;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.95rem;
+}
+
+/* Common button styling */
+.btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease;
+}
+
+/* Download button styles */
+.download-btn {
+  background-color: #1976d2;
+  color: white;
+}
+
+.download-btn:hover {
+  background-color: #155a9c;
+}
+
+/* Save Grade button styles */
+.assign-btn {
+  background-color: #388e3c;
+  color: white;
+}
+
+.assign-btn:hover {
+  background-color: #2e7030;
+}
+
+/* Responsive: stack cards in one column on small screens */
+@media (max-width: 600px) {
+  .submission-container {
+    grid-template-columns: 1fr;
+  }
+}

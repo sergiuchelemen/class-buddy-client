@@ -1,0 +1,14 @@
+<div class="overlay" *ngIf="visible">
+  <div class="dialog">
+    <h2>Join Classroom</h2>
+    <p>Please enter the classroom code below:</p>
+    <input [formControl]="codeControl" placeholder="Classroom Code" />
+    <div class="error" *ngIf="codeControl.touched && codeControl.invalid">
+      Code is required.
+    </div>
+    <div class="actions">
+      <button (click)="cancel()">Cancel</button>
+      <button [disabled]="codeControl.invalid" (click)="confirm()">Join</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,69 @@
+<div class="overlay" *ngIf="visible">
+  <div class="dialog">
+    <div class="row">
+      <div class="col image-col">
+        <i class="bi bi-journal-plus icon"></i>
+      </div>
+      <div class="col form-col">
+        <h2>Add assignment</h2>
+        <p>Fill in the details to add a new homework assignment</p>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+          <div class="form-group">
+            <textarea formControlName="title" placeholder="Title"></textarea>
+            <div class="error" *ngIf="form.get('title')?.touched && form.get('title')?.invalid">
+              Title is required.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <textarea formControlName="description" placeholder="Description"></textarea>
+            <div class="error" *ngIf="form.get('description')?.touched && form.get('description')?.invalid">
+              Description is required.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <input type="date" formControlName="dueDate" />
+            <div class="error" *ngIf="form.get('dueDate')?.touched && form.get('dueDate')?.invalid">
+              Due date is required.
+            </div>
+          </div>
+
+          <div class="form-group file-upload">
+            <label for="fileInput" class="file-label">
+              <i class="bi bi-paperclip"></i> Attach files
+            </label>
+            <input
+              id="fileInput"
+              type="file"
+              multiple
+              (change)="onFileSelected($event)"
+            />
+            <ul class="file-list" *ngFor="let file of files">
+              <li class="file-item bg-light p-2 rounded d-flex align-items-center">
+                <div class="file-preview">
+                  <i class="bi bi-file-earmark-fill"></i>
+                </div>
+                <span class="file-name flex-grow-1 ms-2">{{ file.name }}</span>
+                <!-- default close icon -->
+              </li>
+              <button
+                type="button"
+                (click)="removeFile(file)"
+                class="btn-close"
+                aria-label="Remove"
+              ></button>
+
+            </ul>
+          </div>
+
+          <div class="actions">
+            <button type="button" class="btn cancel" (click)="cancel()">Cancel</button>
+            <button type="submit" class="btn add" [disabled]="form.invalid">Add</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
