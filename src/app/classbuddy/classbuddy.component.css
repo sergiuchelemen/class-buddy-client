@@ -1,0 +1,13 @@
+/* Custom hover & transition effects */
+.list-group-item-action {
+  transition: transform .15s ease, background-color .15s ease;
+}
+.list-group-item-action:hover {
+  transform: translateX(5px);
+  background-color: rgba(0, 123, 255, .05);
+}
+
+/* Make toggle button stand out */
+.btn-primary.position-fixed {
+  box-shadow: 0 4px 8px rgba(0,0,0,.1);
+}
